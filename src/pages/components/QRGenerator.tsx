@@ -38,7 +38,7 @@ const QRGenerator = () => {
 
     const handleQRClick = () => {
         if (qrData) {
-            const url = `https://qrtest-eight.vercel.app/Iam?date=${qrUid}`;
+            const url = `https://iamqr.vercel.app/Iam?date=${qrUid}`;
             router.push(url);
         }
     };
@@ -84,7 +84,7 @@ const QRGenerator = () => {
                             className="border p-4 rounded-lg cursor-pointer hover:bg-gray-200 transition-all duration-300"
                             onClick={handleQRClick}
                         >
-                            <QRCode value={`https://qrtest-eight.vercel.app/Iam?date=${qrUid}`} />
+                            <QRCode value={`https://iamqr.vercel.app/Iam?date=${qrUid}`} />
                         </div>
 
                         <button
