@@ -46,6 +46,7 @@ const Admin: React.FC = () => {
         try {
             const response = await axios.post('/api/addAdmin', { username: newUsername, password: newPassword, name });
             if (response.data) {
+                console.log('Response:', response);
                 alert('가입되었습니다.');
                 setAllowLogin(true);
             } else {
@@ -66,7 +67,10 @@ const Admin: React.FC = () => {
 
                     <div className="space-y-4">
                         <div>
-                            <label htmlFor="username" className="block text-gray-700 font-medium">
+                            <label
+                                htmlFor="username"
+                                className="block text-gray-700 font-medium"
+                            >
                                 아이디
                             </label>
                             <input
@@ -81,7 +85,10 @@ const Admin: React.FC = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-gray-700 font-medium">
+                            <label
+                                htmlFor="password"
+                                className="block text-gray-700 font-medium"
+                            >
                                 비밀번호
                             </label>
                             <input
@@ -97,7 +104,10 @@ const Admin: React.FC = () => {
 
                         {!allowLogin && (
                             <div>
-                                <label htmlFor="name" className="block text-gray-700 font-medium">
+                                <label
+                                    htmlFor="name"
+                                    className="block text-gray-700 font-medium"
+                                >
                                     이름
                                 </label>
                                 <input
