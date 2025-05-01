@@ -19,7 +19,7 @@ export default function Home() {
                     onClick={() => router.push('/Admin')}
                     className="bg-green-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-green-600 transition-all"
                 >
-                    코치 페이지
+                    선생님 페이지
                 </button>
             </div>
         </div>
