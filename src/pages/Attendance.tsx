@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 interface AttendanceRecord {
     attended: boolean;
@@ -54,13 +56,31 @@ export default function Attendance() {
         setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     };
 
+    const handleExportToExcel = () => {
+        const excelData = attendanceData.map((student) => {
+            const row: any = { 이름: student.name };
+            student.attendance.forEach((record, index) => {
+                row[`${index + 1}회차`] = record.attended ? record.dateTime : '✗';
+            });
+            return row;
+        });
+
+        const worksheet = XLSX.utils.json_to_sheet(excelData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Attendance');
+
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        saveAs(blob, 'attendance.xlsx');
+    };
+
     const filteredData = attendanceData.filter((student) =>
         student.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
         <main className="min-h-screen w-full flex flex-col items-center bg-gray-100 p-4">
-            <div className="mb-4 flex gap-4 w-full ">
+            <div className="mb-4 flex gap-4 w-full">
                 <input
                     type="text"
                     placeholder="이름 검색..."
@@ -71,8 +91,11 @@ export default function Attendance() {
                 <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleSort}>
                     이름 정렬 ({sortOrder === 'asc' ? '⬆' : '⬇'})
                 </button>
+                <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={handleExportToExcel}>
+                    엑셀로 저장
+                </button>
             </div>
-            <div className="overflow-x-auto w-full ">
+            <div className="overflow-x-auto w-full">
                 <table className="w-full table-auto bg-white rounded-lg shadow-lg border">
                     <thead>
                         <tr className="bg-gray-200 text-gray-700">
